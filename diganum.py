@@ -124,21 +124,28 @@ def bilhao(num):
         if int(num[0]) == 0:
                 return cem_milhoes(num[1:])
 
-        return umbiumi(num,cem_milhoes,"bilhão","bilhões",20,1)
+        return umbiumi(num,cem_milhoes,"bilhão","bilhões",21,1)
 
 def dezbilhoes(num):
         if int(num[0]) == 0:
                 return bilhao(num[1:])
 
         doisdig = num[0]+num[1]
-        return cembicemi(num,cem_milhoes,dec,"bilhões",doisdig,20,2)
+        return cembicemi(num,cem_milhoes,dec,"bilhões",doisdig,21,2)
       
 def cem_bilhoes(num):
         if int(num[0]) == 0:
                 return dezbilhoes(num[1:])
         tresdig = num[0]+num[1]+num[2]
 
-        return cembicemi(num,cem_milhoes,cent,"bilhões",tresdig,20,3)
+        return cembicemi(num,cem_milhoes,cent,"bilhões",tresdig,21,3)
+
+def trilhao(num):
+        if int(num[0]) == 0:
+                return cem_bilhoes(num[1:])
+
+        return umbiumi(num,cem_bilhoes,"trilhão","trilhões",21,1)
+
 
 
 def cembicemi(num,func,func2,string,string2,lstr,numcut):
@@ -166,16 +173,21 @@ def umbiumi(num,func,string,string2,lstr,numcut):
                                 return unitarios(num[0]) + " " + string2 +" " + func(num[numcut:])
                 if int(num[0]) == 1:
                                 if len(func(num[1:])) <= lstr:
-                                        return unitarios(num[0]) + " " + string2 + " e "+ func(num[numcut:])
+                                        return unitarios(num[0]) + " " + string + " e "+ func(num[numcut:])
                                         
                                 else:
-                                        return unitarios(num[0]) + " " + string2 +" "+ func(num[numcut:])
+                                        return unitarios(num[0]) + " " + string +" "+ func(num[numcut:])
         else:
                 if int(num[0]) != 1:
                         return unitarios(num[0]) +  " " + string2 +" "
                 else:
                         return unitarios(num[0]) + " " + string
+def comandoselec(num):
+        for i in range(len(comandos)):
+                if len(num) == i+1:
+                        return comandos[i](num)
 
+comandos = [unitarios,dec,cent,mil,dezmil,cem_mil,milhao,dezmilhoes,cem_milhoes,bilhao,dezbilhoes,cem_bilhoes,trilhao]
 
 def __main__():
         run= True
@@ -186,30 +198,7 @@ def __main__():
                         run= False
                 else:
 
-                        if len(num) == 1:
-                                print(unitarios(num))
-                        if len(num) == 2:
-                                print(dec(num))
-                        if len(num) == 3:
-                                print(cent(num))
-                        if len(num) == 4:
-                                print(mil(num))
-                        if len(num) == 5:
-                                print(dezmil(num)) 
-                        if len(num) == 6:
-                                print(cem_mil(num))
-                        if len(num) == 7:
-                                print(milhao(num))
-                        if len(num) == 8:
-                                print(dezmilhoes(num))
-                        if len(num) == 9:
-                                print(cem_milhoes(num))
-                        if len(num) == 10:
-                                print(bilhao(num))
-                        if len(num) == 11:
-                                print(dezbilhoes(num))
-                        if len(num) == 12:
-                                print(cem_bilhoes(num))
+                        print(comandoselec(num))
 
 
 
