@@ -59,6 +59,9 @@ def cent(num):
                                         return centena[i] + " e " + unitarios(num[2])
                                 else:
                                       return centena[i] + " e " + dec(num[1]+num[2])  
+
+
+
 def mil(num):
 
         if int(num[0]) == 0:
@@ -87,35 +90,38 @@ def mil(num):
                         
 
 def dezmil(num):
-        if int(num[0]) == 0:
-                return  mil(num[1:])
-        
-        
-        if cent(num[2:]) != "":        
-                if len(cent(num[2:]))  <= 12 or num[2:][0]=="0":  
-                    return dec(num[0]+num[1])+ " mil e " + cent(num[2:])
-                else:
-                    return dec(num[0]+num[1])+ " mil " + cent(num[2:])
+    doisdig = num[0]+num[1]
+    return milhares(num,2,mil,dec,cent,doisdig) 
 
-        else:
-                return dec(num[0]+num[1])+ " mil"
                 
-              
+def cem_mil(num):      
+    tresdig = num[0]+num[1]+num[2]
+    return milhares(num,3,dezmil,cent,cent,tresdig)              
 
-def cem_mil(num):
-        if int(num[0]) == 0:
-                return dezmil(num[1:])
 
-        if cent(num[3:]) != "":  
-                if len(cent(num[3:]))  <= 12 or num[3:][0]=="0":         
-                    return cent(num[0]+num[1]+num[2])+ " mil e " + cent(num[3:])
-                else:
-                    return cent(num[0]+num[1]+num[2])+ " mil " + cent(num[3:])
 
-                      
-        else:
-                return cent(num[0]+num[1]+num[2])+ " mil"
-              
+def milhares(num,numcut,func,func2,func3,string):
+    if int(num[0]) == 0:
+                return func(num[1:])
+
+    if cent(num[numcut:]) != "":  
+            if len(str(func2(num[numcut:])))  <= 12 or num[numcut:][0]=="0": 
+
+                
+                return func2(string)+ " mil e " + func3(num[numcut:])
+                
+            else: 
+                   
+                return func2(string)+ " mil " + func3(num[numcut:])
+                              
+    else:   
+            return func2(string)+ " mil"
+        
+
+
+
+
+
 def milhao(num):   
         if int(num[0]) == 0:
                 return cem_mil(num[1:])
