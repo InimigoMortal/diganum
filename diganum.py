@@ -63,30 +63,7 @@ def cent(num):
 
 
 def mil(num):
-
-        if int(num[0]) == 0:
-                return  cent(num[1:])
-
-        
-        if cent(num[1:]) != "":      
-                if int(num[0]) != 1: 
-                    if len(cent(num[1:])) <= 12 or num[1:][0]=="0" :
-                        return unitarios(num[0]) +" mil e " + cent(num[1:])
-
-                    else:
-                        
-                        return unitarios(num[0]) +" mil "+ cent(num[1:])
-
-                else:
-                    if len(cent(num[1:])) <= 12 or num[1:][0]=="0":
-                        return "mil e " + cent(num[1:])
-                    else:
-                        return "mil " + cent(num[1:])
-        else:
-                if int(num[0]) != 1:
-                        return unitarios(num[0]) +" mil"
-                else:
-                        return "mil"
+    return milhares(num,1,cent,unitarios,cent,num[0])
                         
 
 def dezmil(num):
@@ -99,26 +76,39 @@ def cem_mil(num):
     return milhares(num,3,dezmil,cent,cent,tresdig)              
 
 
-
 def milhares(num,numcut,func,func2,func3,string):
     if int(num[0]) == 0:
                 return func(num[1:])
 
     if cent(num[numcut:]) != "":  
-            if len(str(func2(num[numcut:])))  <= 12 or num[numcut:][0]=="0": 
+        if len(str(num)) != 4:
+                if len(str(func2(num[numcut:])))  <= 12 or num[numcut:][0]=="0": 
+                    return func2(string)+ " mil e " + func3(num[numcut:])
+                    
+                else: 
+                    return func2(string)+ " mil " + func3(num[numcut:]) 
+        else:
+            if int(num[0]) != 1: 
+                    if len(str(func(num[numcut:]))) <= 12 or num[numcut:][0]=="0" :
+                        return func2(string) +" mil e " + func3(num[numcut:])
 
-                
-                return func2(string)+ " mil e " + func3(num[numcut:])
-                
-            else: 
-                   
-                return func2(string)+ " mil " + func3(num[numcut:])
-                              
-    else:   
-            return func2(string)+ " mil"
+                    else:
+                        return func2(string) +" mil "+ func3(num[numcut:])
+            else:
+                if len(str(func(num[numcut:]))) <= 12 or num[numcut:][0]=="0":
+                    return "mil e " + func3(num[numcut:])
+                else:
+                    return "mil " + func3(num[numcut:])
+                                                
+    else:
+        if len(str(num)) == 4:  
+            if int(num[0]) != 1:
+                return func2(string) +" mil"
+            else:
+                return "mil"  
+        else:
+            return func2(string)+ " mil"   
         
-
-
 
 
 
@@ -187,17 +177,13 @@ def umbiumi(num,func,string,string2,lstr,numcut):
         if func(num[numcut:]) != "":
                 if int(num[0]) != 1:
 
-                        if len(func(num[numcut:])) <= lstr:
-                               
-                                return unitarios(num[0]) + " " + string2 + " e " + func(num[numcut:])
-                                
-                        else:
-                                
+                        if len(func(num[numcut:])) <= lstr:                   
+                                return unitarios(num[0]) + " " + string2 + " e " + func(num[numcut:])      
+                        else:                                
                                 return unitarios(num[0]) + " " + string2 +" " + func(num[numcut:])
                 if int(num[0]) == 1:
                                 if len(func(num[1:])) <= lstr:
-                                        return unitarios(num[0]) + " " + string + " e "+ func(num[numcut:])
-                                        
+                                        return unitarios(num[0]) + " " + string + " e "+ func(num[numcut:])       
                                 else:
                                         return unitarios(num[0]) + " " + string +" "+ func(num[numcut:])
         else:
@@ -216,13 +202,8 @@ def __main__():
         run= True
         while(run):
                 num = input("digite um numero: ")
-                
                 if len(num) >= 2 and num[0] == "0":
                         run= False
                 else:
-
                         print(comandoselec(num))
-
-
-
 __main__()
