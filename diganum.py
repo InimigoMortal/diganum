@@ -67,13 +67,15 @@ def mil(num):
         
         if cent(num[1:]) != "":      
                 if int(num[0]) != 1: 
-                    if len(cent(num[1:])) <= 12:
+                    if len(cent(num[1:])) <= 12 or num[1:][0]=="0" :
                         return unitarios(num[0]) +" mil e " + cent(num[1:])
 
                     else:
+                        
                         return unitarios(num[0]) +" mil "+ cent(num[1:])
+
                 else:
-                    if len(cent(num[1:])) <= 12:
+                    if len(cent(num[1:])) <= 12 or num[1:][0]=="0":
                         return "mil e " + cent(num[1:])
                     else:
                         return "mil " + cent(num[1:])
@@ -90,7 +92,7 @@ def dezmil(num):
         
         
         if cent(num[2:]) != "":        
-                if len(cent(num[2:]))  <= 12:  
+                if len(cent(num[2:]))  <= 12 or num[2:][0]=="0":  
                     return dec(num[0]+num[1])+ " mil e " + cent(num[2:])
                 else:
                     return dec(num[0]+num[1])+ " mil " + cent(num[2:])
@@ -105,7 +107,7 @@ def cem_mil(num):
                 return dezmil(num[1:])
 
         if cent(num[3:]) != "":  
-                if len(cent(num[3:]))  <= 12:         
+                if len(cent(num[3:]))  <= 12 or num[3:][0]=="0":         
                     return cent(num[0]+num[1]+num[2])+ " mil e " + cent(num[3:])
                 else:
                     return cent(num[0]+num[1]+num[2])+ " mil " + cent(num[3:])
