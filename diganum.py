@@ -20,16 +20,13 @@ def dec(num):
                 else:
                         return ""
         if int(num[0]) == 1:
-                for i in range(len(umadezena)):
-                        if int(num[1]) == i:
-                                return umadezena[i]
+                return umadezena[int(num[1])]
 
         for i in range(len(dezena)):
                 if i+2 == int(num[0]):
                         if int(num[1]) == 0:
                                 return dezena[i]
                         else:
-                                
                                 return dezena[i] + " e " + unitarios(num[1])
                                 
 
@@ -39,27 +36,18 @@ def cent(num):
         if int(num[0]) == 0:
                 return dec(num[1:])
         if int(num[0]) == 1:
-                if int(num[1]) == 0 and int(num[2]) == 0:
-                        return umacentena[0] #cem
-
-                if int(num[1]) != 0: #cem e dezena
-                        
-                        return umacentena[1] + " e " + dec(num[1]+num[2])
-                        
-                if int(num[2]) != 0 and int(num[1]) == 0:#cem e unidade
-                        return umacentena[1] + " e " + unitarios(num[2])
-
+            if dec(num[1:]) != "":
+                return umacentena[1] + " e " + dec(num[1]+num[2])
+                
+            else:
+                return umacentena[0]
 
         for i in range(len(centena)):
                 if int(num[0]) == i+2:
-                        if int(num[1]) == 0 and int(num[2]) == 0:
-                                return centena[i]
-                        else:
-                                if int(num[2]) != 0 and int(num[1]) == 0:      
-                                        return centena[i] + " e " + unitarios(num[2])
-                                else:
-                                      return centena[i] + " e " + dec(num[1]+num[2])  
-
+                    if dec(num[1:]) != "":
+                        return centena[i] + " e " + dec(num[1]+num[2])
+                    else:
+                        return centena[i]
 
 
 def mil(num):
@@ -177,13 +165,17 @@ def umbiumi(num,func,string,string2,lstr,numcut):
         if func(num[numcut:]) != "":
                 if int(num[0]) != 1:
 
-                        if len(func(num[numcut:])) <= lstr:                   
-                                return unitarios(num[0]) + " " + string2 + " e " + func(num[numcut:])      
-                        else:                                
+                        if len(func(num[numcut:])) <= lstr:
+                               
+                                return unitarios(num[0]) + " " + string2 + " e " + func(num[numcut:])
+                                
+                        else:
+                                
                                 return unitarios(num[0]) + " " + string2 +" " + func(num[numcut:])
                 if int(num[0]) == 1:
                                 if len(func(num[1:])) <= lstr:
-                                        return unitarios(num[0]) + " " + string + " e "+ func(num[numcut:])       
+                                        return unitarios(num[0]) + " " + string + " e "+ func(num[numcut:])
+                                        
                                 else:
                                         return unitarios(num[0]) + " " + string +" "+ func(num[numcut:])
         else:
@@ -201,9 +193,19 @@ comandos = [unitarios,dec,cent,mil,dezmil,cem_mil,milhao,dezmilhoes,cem_milhoes,
 def __main__():
         run= True
         while(run):
-                num = input("digite um numero: ")
+                num = input("digite um numero (00 pra sair): ")
+                
                 if len(num) >= 2 and num[0] == "0":
                         run= False
                 else:
-                        print(comandoselec(num))
+                        if num[0] != "-":
+                            print(comandoselec(num))
+                        else:
+                            if num == "-0":
+                                pass
+                            else:
+                                print("menos " + comandoselec(num[1:]))
+
+
+
 __main__()
