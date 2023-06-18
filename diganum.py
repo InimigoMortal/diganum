@@ -146,10 +146,20 @@ def trilhao(num):
                 return cem_bilhoes(num[1:])
 
         return umbiumi(num,cem_bilhoes,"trilhão","trilhões",21,1)
+def deztri(num):
+    if int(num[0]) == 0:
+                return trilhao(num[1:])
+    doisdig = num[0]+num[1]
+    return cembicemi(num,cem_bilhoes,dec,"trilhões",doisdig,21,2)
+
+def cemtri(num):
+    if int(num[0]) == 0:
+                return deztri(num[1:])
+    tresdig = num[0]+num[1]+num[2]
+    return cembicemi(num,cem_bilhoes,cent,"trilhões",tresdig,21,3)
 
 
-
-def cembicemi(num,func,func2,string,string2,lstr,numcut):
+def cembicemi(num,func,func2,string,string2,lstr,numcut):#centena e dezena de multiplos numeros
         
         if func(num[numcut:]) != "":
                 if len(func(num[numcut:])) <= lstr:
@@ -161,7 +171,7 @@ def cembicemi(num,func,func2,string,string2,lstr,numcut):
         else:
                 return func2(string2) + " " + string + " "+ func(num[numcut:])
 
-def umbiumi(num,func,string,string2,lstr,numcut):
+def umbiumi(num,func,string,string2,lstr,numcut):#unidade de multiplos numeros
         if func(num[numcut:]) != "":
                 if int(num[0]) != 1:
 
@@ -188,7 +198,7 @@ def comandoselec(num):
                 if len(num) == i+1:
                         return comandos[i](num)
 
-comandos = [unitarios,dec,cent,mil,dezmil,cem_mil,milhao,dezmilhoes,cem_milhoes,bilhao,dezbilhoes,cem_bilhoes,trilhao]
+comandos = [unitarios,dec,cent,mil,dezmil,cem_mil,milhao,dezmilhoes,cem_milhoes,bilhao,dezbilhoes,cem_bilhoes,trilhao,deztri,cemtri]
 
 def __main__():
         run= True
